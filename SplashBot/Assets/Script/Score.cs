@@ -10,17 +10,21 @@ public class Score : MonoBehaviour
 
     void Start()
     {
-        spawnBotsScript = GetComponent<SpawnBots>();
+        spawnBotsScript = FindObjectOfType<SpawnBots>();
 
-         scoreText = GetComponent<Text>();
+         scoreText = transform.Find("Score").GetComponent<Text>();
+
+         score = spawnBotsScript.score;
        
-        UpdateScoreText();
+       // UpdateScoreText();
+
+       // Debug.Log("score: "+ score);
     }
 
    // Update is called once per frame
      void Update()
      {
-        UpdateScoreText();
+       // UpdateScoreText();
      }
 
      void UpdateScoreText()

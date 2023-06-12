@@ -66,11 +66,12 @@ public class SpawnBots : MonoBehaviour
         // Position des ausgewählten Spawnpunkts verwenden
         Vector3 spawnPosition = selectedSpawnPoint.position;
 
-         GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position - spawnPosition));
+         GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
  
                 // Starte den Despawn-Countdown
                 Destroy(instantiatedBot, despawnDelay);
                 score = score + 10;
+                
         
     }
 
