@@ -35,6 +35,7 @@ public class SpawnBots : MonoBehaviour
     // Punkte
     public long score = 0;
 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -47,30 +48,42 @@ public class SpawnBots : MonoBehaviour
 
 
        
-        InvokeRepeating("SpawnBotss", startCountdown,spawnInterval);
+        InvokeRepeating("SpawnBotsStand", startCountdown,spawnInterval);
 
         InvokeRepeating("SpawnAndMoveBots", 60f ,10f);
         
         
     }
 
-    private void SpawnBotss()
+    private void SpawnBotsStand()
         {
             
         if (!spawnEnabled)
             return;
+
+            bool laufTag = false;
+
         // Zufällig einen Spawnpunkt auswählen
         int randomIndex = Random.Range(0, spawnPoints.Length);
         Transform selectedSpawnPoint = spawnPoints[randomIndex];
+        //Todo delete
+        //Transform selectedSpawnPoint = spawnPoints[1];
 
         // Position des ausgewählten Spawnpunkts verwenden
         Vector3 spawnPosition = selectedSpawnPoint.position;
 
          GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
+
+        //Hitbox erstellen
+         instantiatedBot = CreateHitbox( instantiatedBot, laufTag);
  
-                // Starte den Despawn-Countdown
-                Destroy(instantiatedBot, despawnDelay);
-                score = score + 10;
+          
+        /* if( instantiatedBot !=null){
+            // lambafunktion als Wrapper  um das bot objekt zu übergeben
+             System.Action deleteBotAction = () => deleteBotAfterTime(instantiatedBot);
+            Invoke(deleteBotAction, despawnDelay);
+        }*/
+                
                 
         
     }
@@ -79,6 +92,10 @@ public class SpawnBots : MonoBehaviour
 {
     if (!spawnEnabled)
             return;
+
+            bool laufTag = false;
+
+
     // Zufällig einen Spawnpunkt auswählen
     int randomIndex = Random.Range(0, spawnPointsMove.Length);
     Transform selectedSpawnPoint = spawnPointsMove[randomIndex];
@@ -89,11 +106,18 @@ public class SpawnBots : MonoBehaviour
     // Bot spawnen
     GameObject instantiatedBot = Instantiate(bot, spawnPosition,  Quaternion.LookRotation(lookAt.position - spawnPosition));
 
+   //Hitbox erstellen
+         instantiatedBot = CreateHitbox( instantiatedBot, laufTag); 
+
+
+
     // Bot zu einem bestimmten Punkt bewegen
     Vector3 targetPosition = deletePoints[randomIndex].position ;
     float movementSpeed = 5f; // Beispielgeschwindigkeit, mit der sich der Bot bewegt
 
     StartCoroutine(MoveBot(instantiatedBot, targetPosition, movementSpeed));
+   // botAnimator.SetBool("IsMoving", false);
+
 }
 
 private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float speed)
@@ -107,8 +131,11 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
     }
 
     // Bot zerstören
-    Destroy(botToMove);
-    score = score + 20;
+    if(botToMove != null){
+       Destroy(botToMove); 
+    }
+    
+    
 }
 
  private void DisableSpawn()
@@ -123,6 +150,65 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
 
         score = 0;
     }
+
+    private GameObject CreateHitbox( GameObject bot, bool laufTag){
+
+        // die physik
+        Rigidbody rb = bot.AddComponent<Rigidbody>();
+        rb.mass = 5.0f;
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezePositionY;
+
+
+       MeshFilter meshFilter = bot.GetComponent<MeshFilter>();
+    if (meshFilter != null)
+    {
+        MeshCollider meshCollider = bot.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = meshFilter.sharedMesh;
+        // Setze den Tag für die Hitbox
+        if(laufTag){
+            meshCollider.gameObject.tag = "Hitbox20";
+        }
+        else{
+             meshCollider.gameObject.tag = "Hitbox10";
+        }
+       
+    }
+
+
+        return bot;
+
+
+    }
+
+    private void deleteBotAfterTime(GameObject bot){
+
+        Destroy( bot);
+
+    }
+
+private void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.CompareTag("Hitbox10"))
+    {
+        HandleHitboxCollision(collision.gameObject, 10);
+    }
+
+    if (collision.gameObject.CompareTag("Hitbox20"))
+    {
+        HandleHitboxCollision(collision.gameObject, 20);
+    }
+}
+
+private void HandleHitboxCollision(GameObject bot, int scoreToAdd)
+{
+    //  Animation abspielen.
+
+    // Kollision mit der Hitbox
+    Destroy(bot); // Zerstöre das kollidierende GameObject (den Bot)
+    score += scoreToAdd;
+}
+
 
    
 }
