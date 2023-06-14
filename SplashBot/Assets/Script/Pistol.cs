@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Pistol : weapon
+public class Pistol : Weapon
 {
 
-    private GameObject bulletPrefab;
+    [SerializeField] private Projectile bulletPrefab;
 
     protected override void StartShooting(XRBaseInteractor interactor) 
     {
@@ -17,7 +17,9 @@ public class Pistol : weapon
     protected override void Shoot() 
     {
         base.Shoot();
-        GameObject projectileInstance = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        Projectile projectileInstance = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        projectileInstance.Init(this);
+        projectileInstance.Launch();
     }
 
     protected override void StopShooting(XRBaseInteractor interactor)

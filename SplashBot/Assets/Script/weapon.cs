@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(XRGrabInteractable))]
-public class weapon : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     [SerializeField] protected float shootingForce;
     [SerializeField] protected Transform bulletSpawn;
@@ -24,10 +25,17 @@ public class weapon : MonoBehaviour
 
     private void SetupInteractableWeaponEvents()
     {
-        interactableWeapon.selectEntered.AddListener(PickUpWeapon);
-        interactableWeapon.selectExited.AddListener(DropWeapon);
-        interactableWeapon.activate.AddListener(StartShooting);
-        interactableWeapon.deactivate.AddListener(StopShooting);
+        interactableWeapon.selectEntered.AddListener(args =>
+        {
+            PickUpWeapon(args.interactorObject as XRBaseInteractor);
+            StartShooting(args.interactorObject as XRBaseInteractor);
+        });
+
+        interactableWeapon.selectExited.AddListener(args =>
+        {
+            DropWeapon(args.interactorObject as XRBaseInteractor);
+            StopShooting(args.interactorObject as XRBaseInteractor);
+        });
     }
 
     private void PickUpWeapon(XRBaseInteractor interactor) 
@@ -57,7 +65,7 @@ public class weapon : MonoBehaviour
 
     private void ApplyRecoil()
     {
-        rigidbody.AddRelativeForce(Vector3.back * recoilForce, ForceMode.impulse);
+        rigidbody.AddRelativeForce(Vector3.back * recoilForce, ForceMode.Impulse);
     }
 
     public float GetShootingForce()
@@ -69,5 +77,4 @@ public class weapon : MonoBehaviour
     {
         return damage;
     }
-
 }
