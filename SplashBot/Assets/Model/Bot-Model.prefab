@@ -349,6 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3422961332543386156}
   - component: {fileID: 8092577624933659424}
+  - component: {fileID: 5479803264348006581}
   m_Layer: 0
   m_Name: Bot-Model
   m_TagString: bot
@@ -390,6 +391,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6190076, y: 0.455989, z: 0.48731184}
   m_Center: {x: -0.02190888, y: 1.367908, z: -0.0006697178}
+--- !u!95 &5479803264348006581
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2651245373713361046}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: de9070446d177214daf60e7d1f3bdc48, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2878049996950884888
 GameObject:
   m_ObjectHideFlags: 0

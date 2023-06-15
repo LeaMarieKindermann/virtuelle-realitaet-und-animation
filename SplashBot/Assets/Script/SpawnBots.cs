@@ -34,11 +34,12 @@ public class SpawnBots : MonoBehaviour
 
     // Punkte
     public long score = 0;
-
+//TODO delete
     //id
-    private long id = 0;
+    //private long id = 0;
 
-    
+    //Animator
+    Animator botAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -76,19 +77,21 @@ public class SpawnBots : MonoBehaviour
         Vector3 spawnPosition = selectedSpawnPoint.position;
 
          GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
+         botAnimator = instantiatedBot.GetComponent<Animator>();
+        botAnimator.SetTrigger("disapear");
+       
 
-        //Hitbox erstellen
-        //instantiatedBot = CreateHitbox( instantiatedBot, laufTag);
-       // id = id + 1;
-
-        //instantiatedBot.tag = "id" + id;
+    
 
 
-        /* if( instantiatedBot !=null){
+         if( instantiatedBot !=null){
             // lambafunktion als Wrapper  um das bot objekt zu übergeben
-             System.Action deleteBotAction = () => deleteBotAfterTime(instantiatedBot);
-            Invoke(deleteBotAction, despawnDelay);
-        }*/
+            // System.Action deleteBotAction = () => deleteBotAfterTime(instantiatedBot);
+            //Invoke("deleteBotAction", despawnDelay);
+            StartCoroutine(DeleteBotAfterTime(instantiatedBot, despawnDelay));
+            
+
+        }
 
 
 
@@ -112,8 +115,9 @@ public class SpawnBots : MonoBehaviour
     // Bot spawnen
     GameObject instantiatedBot = Instantiate(bot, spawnPosition,  Quaternion.LookRotation(lookAt.position + spawnPosition));
 
-   //Hitbox erstellen
-         //instantiatedBot = CreateHitbox( instantiatedBot, laufTag); 
+    botAnimator = instantiatedBot.GetComponent<Animator>();
+
+    
 
 
 
@@ -121,8 +125,9 @@ public class SpawnBots : MonoBehaviour
     Vector3 targetPosition = deletePoints[randomIndex].position ;
     float movementSpeed = 5f; // Beispielgeschwindigkeit, mit der sich der Bot bewegt
 
+    botAnimator.SetTrigger("moving");
     StartCoroutine(MoveBot(instantiatedBot, targetPosition, movementSpeed));
-   // botAnimator.SetBool("IsMoving", false);
+    
 
 }
 
@@ -157,63 +162,30 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         score = 0;
     }
 
-    private GameObject CreateHitbox( GameObject bot, bool laufTag){
+    
 
+    private IEnumerator DeleteBotAfterTime(GameObject bot,  float delay){
 
-
-        /*  
-         //MeshFilter meshFilter = bot.GetComponent<MeshFilter>();
-     // if (meshFilter != null)
-      //{
-          BoxCollider meshCollider = bot.GetComponent<BoxCollider>();
-         // meshCollider.sharedMesh = meshFilter.sharedMesh;
-          // Setze den Tag für die Hitbox
-          if(laufTag){
-              meshCollider.gameObject.tag = "Hitbox20";
-          }
-          else{
-               meshCollider.gameObject.tag = "Hitbox10";
-          }*/
-
-        //}
-
-        BoxCollider collider = bot.GetComponent<BoxCollider>();
-        // meshCollider.sharedMesh = meshFilter.sharedMesh;
-        // Setze den Tag für die Hitbox
-       // id = id + 1;
-        
-         //   bot.tag ="id" + id;
-        
-
-
-        return bot;
-
-
+        yield return new WaitForSeconds(20f);
+        if(bot != null){
+    
+        botAnimator.SetTrigger("disapear");
+        yield return new WaitForSeconds(5f);
+        Destroy(bot, 3);
+        }
     }
-
-    private void deleteBotAfterTime(GameObject bot){
-
-        Destroy( bot);
-
-    }
-    /*
-private void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("Hitbox10"))
-    {
-        HandleHitboxCollision(collision.gameObject, 10);
-    }
-
-    if (collision.gameObject.CompareTag("Hitbox20"))
-    {
-        HandleHitboxCollision(collision.gameObject, 20);
-    }
-}*/
+    
 
     private void OnCollisionEnter(Collision collision)
     {
+
+        if(collision.gameObject.CompareTag("joined")){
+            return;
+        }
+
         if (collision.gameObject.CompareTag("bot"))
         {
+            botAnimator.SetTrigger("fall");
             Destroy(collision.gameObject);
             Debug.Log("Bot zerstört");
         }
@@ -228,14 +200,7 @@ private void OnCollisionEnter(Collision collision)
         }
     }
 
-    //private void HandleHitboxCollision(GameObject bot, int scoreToAdd)
-    //{
-    //  Animation abspielen.
-
-    // Kollision mit der Hitbox
-    //Destroy(bot); // Zerstöre das kollidierende GameObject (den Bot)
-    //score += scoreToAdd;
-    //}
+   
 
 
    
