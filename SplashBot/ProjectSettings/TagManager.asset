@@ -8,6 +8,8 @@ TagManager:
   - destroy
   - area
   - bot
+  - hallway
+  - bullet
   layers:
   - Default
   - TransparentFX

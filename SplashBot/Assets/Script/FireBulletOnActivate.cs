@@ -31,18 +31,4 @@ public class FireBulletOnActivate : MonoBehaviour
         Destroy(spawnBullet, 5);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "bot")
-        {
-            Destroy(collision.gameObject);
-            Debug.Log("TERFFER" + collision.gameObject.tag);
-        }
-        else
-        {
-            Debug.Log("LLLLLOOOOGGGGG" + collision.gameObject.tag);
-        }
-    }
-
 }

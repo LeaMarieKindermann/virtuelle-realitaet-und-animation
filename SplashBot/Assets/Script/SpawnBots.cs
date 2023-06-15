@@ -212,13 +212,19 @@ private void OnCollisionEnter(Collision collision)
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.gameObject.tag=="bot")
+        if (collision.gameObject.CompareTag("bot"))
         {
             Destroy(collision.gameObject);
-        } else
+            Debug.Log("Bot zerstört");
+        }
+        else if (collision.gameObject.CompareTag("bullet"))
         {
-            Debug.Log(collision.gameObject.tag);
+            Destroy(collision.gameObject);
+            Debug.Log("Bullet zerstört");
+        }
+        else
+        {
+            Debug.Log("Kollision mit unbekanntem Objekt");
         }
     }
 
