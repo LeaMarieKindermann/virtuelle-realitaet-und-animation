@@ -35,6 +35,9 @@ public class SpawnBots : MonoBehaviour
     // Punkte
     public long score = 0;
 
+    //id
+    private long id = 0;
+
     
 
     // Start is called before the first frame update
@@ -75,17 +78,20 @@ public class SpawnBots : MonoBehaviour
          GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
 
         //Hitbox erstellen
-         instantiatedBot = CreateHitbox( instantiatedBot, laufTag);
- 
-          
+        //instantiatedBot = CreateHitbox( instantiatedBot, laufTag);
+       // id = id + 1;
+
+        //instantiatedBot.tag = "id" + id;
+
+
         /* if( instantiatedBot !=null){
             // lambafunktion als Wrapper  um das bot objekt zu übergeben
              System.Action deleteBotAction = () => deleteBotAfterTime(instantiatedBot);
             Invoke(deleteBotAction, despawnDelay);
         }*/
-                
-                
-        
+
+
+
     }
 
     private void SpawnAndMoveBots()
@@ -104,10 +110,10 @@ public class SpawnBots : MonoBehaviour
     Vector3 spawnPosition = selectedSpawnPoint.position;
 
     // Bot spawnen
-    GameObject instantiatedBot = Instantiate(bot, spawnPosition,  Quaternion.LookRotation(lookAt.position - spawnPosition));
+    GameObject instantiatedBot = Instantiate(bot, spawnPosition,  Quaternion.LookRotation(lookAt.position + spawnPosition));
 
    //Hitbox erstellen
-         instantiatedBot = CreateHitbox( instantiatedBot, laufTag); 
+         //instantiatedBot = CreateHitbox( instantiatedBot, laufTag); 
 
 
 
@@ -153,27 +159,31 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
 
     private GameObject CreateHitbox( GameObject bot, bool laufTag){
 
-        // die physik
-        Rigidbody rb = bot.AddComponent<Rigidbody>();
-        rb.mass = 5.0f;
-        rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezePositionY;
 
 
-       MeshFilter meshFilter = bot.GetComponent<MeshFilter>();
-    if (meshFilter != null)
-    {
-        MeshCollider meshCollider = bot.AddComponent<MeshCollider>();
-        meshCollider.sharedMesh = meshFilter.sharedMesh;
+        /*  
+         //MeshFilter meshFilter = bot.GetComponent<MeshFilter>();
+     // if (meshFilter != null)
+      //{
+          BoxCollider meshCollider = bot.GetComponent<BoxCollider>();
+         // meshCollider.sharedMesh = meshFilter.sharedMesh;
+          // Setze den Tag für die Hitbox
+          if(laufTag){
+              meshCollider.gameObject.tag = "Hitbox20";
+          }
+          else{
+               meshCollider.gameObject.tag = "Hitbox10";
+          }*/
+
+        //}
+
+        BoxCollider collider = bot.GetComponent<BoxCollider>();
+        // meshCollider.sharedMesh = meshFilter.sharedMesh;
         // Setze den Tag für die Hitbox
-        if(laufTag){
-            meshCollider.gameObject.tag = "Hitbox20";
-        }
-        else{
-             meshCollider.gameObject.tag = "Hitbox10";
-        }
-       
-    }
+       // id = id + 1;
+        
+         //   bot.tag ="id" + id;
+        
 
 
         return bot;
@@ -186,7 +196,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         Destroy( bot);
 
     }
-
+    /*
 private void OnCollisionEnter(Collision collision)
 {
     if (collision.gameObject.CompareTag("Hitbox10"))
@@ -198,16 +208,28 @@ private void OnCollisionEnter(Collision collision)
     {
         HandleHitboxCollision(collision.gameObject, 20);
     }
-}
+}*/
 
-private void HandleHitboxCollision(GameObject bot, int scoreToAdd)
-{
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.tag=="bot")
+        {
+            Destroy(collision.gameObject);
+        } else
+        {
+            Debug.Log(collision.gameObject.tag);
+        }
+    }
+
+    //private void HandleHitboxCollision(GameObject bot, int scoreToAdd)
+    //{
     //  Animation abspielen.
 
     // Kollision mit der Hitbox
-    Destroy(bot); // Zerstöre das kollidierende GameObject (den Bot)
-    score += scoreToAdd;
-}
+    //Destroy(bot); // Zerstöre das kollidierende GameObject (den Bot)
+    //score += scoreToAdd;
+    //}
 
 
    

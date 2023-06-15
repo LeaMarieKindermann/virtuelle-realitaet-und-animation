@@ -20,7 +20,7 @@ public class FireBulletOnActivate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void FireBullet(ActivateEventArgs arg)
@@ -29,6 +29,20 @@ public class FireBulletOnActivate : MonoBehaviour
         spawnBullet.transform.position = spawnPoint.position;
         spawnBullet.GetComponent<Rigidbody>().velocity = spawnPoint.forward * fireSpeed;
         Destroy(spawnBullet, 5);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "bot")
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("TERFFER" + collision.gameObject.tag);
+        }
+        else
+        {
+            Debug.Log("LLLLLOOOOGGGGG" + collision.gameObject.tag);
+        }
     }
 
 }
