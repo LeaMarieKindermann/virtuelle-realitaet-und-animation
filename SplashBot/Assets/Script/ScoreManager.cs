@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
         score += points;
 
         // Hier kannst du weitere Aktionen basierend auf dem erreichten Punktestand ausführen
+        Debug.Log("Punktezahl" + score);
     }
 }
 

@@ -5,16 +5,34 @@ using UnityEngine;
 public class BulletCollisionHandler : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("bot"))
     {
-        Debug.Log("Kollision mit Bot");
-        Destroy(collision.gameObject);
-        Destroy(gameObject); // Zerstöre das Bullet-Objekt
-    }
-    else
-    {
-        Debug.Log("Kollision mit anderem Objekt " + collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("headshot"))
+        {
+            // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
+            GameObject robot = collision.transform.root.gameObject;
+
+            // Zerstöre den Roboter
+            Destroy(robot);
+        }
+        if (collision.gameObject.CompareTag("bodyshot"))
+        {
+            // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
+            GameObject robot = collision.transform.root.gameObject;
+
+            // Zerstöre den Roboter
+            Destroy(robot);
+        }
+        if (collision.gameObject.CompareTag("footshot"))
+        {
+            // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
+            GameObject robot = collision.transform.root.gameObject;
+
+            // Zerstöre den Roboter
+            Destroy(robot);
+        }
+
+        // Zerstöre das Bullet-Objekt
+        Destroy(gameObject);
     }
 }
-}
+
