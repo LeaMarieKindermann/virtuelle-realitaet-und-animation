@@ -7,6 +7,11 @@ public class MenuController : MonoBehaviour
 {
     public void StartBtn()
     {
-        SceneManagement.LoadScene("cyberBot");
+        SceneManager.LoadScene("cyberBot");
+    }
+
+    public void BeendenBtn()
+    {
+        Application.Quit();
     }
 }
