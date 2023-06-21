@@ -11,6 +11,9 @@ TagManager:
   - hallway
   - bullet
   - joined
+  - headshot
+  - bodyshot
+  - footshot
   layers:
   - Default
   - TransparentFX
