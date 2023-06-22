@@ -5,12 +5,7 @@ using UnityEngine;
 public class StartGame : MonoBehaviour
 {
     public SpawnBots startGame;
-    //private TimerScript timer;
-
-    /* private void Start()
-    {
-        timer = GetComponent<TimerScript>();
-    } */
+    public TimerScript timer;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -19,12 +14,17 @@ public class StartGame : MonoBehaviour
         {
             Debug.Log("RUFT AUF");
 
-            // Überprüfe, ob startGame nicht null ist, bevor die Methode aufgerufen wird
-            if (startGame != null)
+            // Überprüfe, ob startGame und timer nicht null sind, bevor die Methoden aufgerufen werden
+            if (startGame != null && timer != null)
             {
                 startGame.StartSpawning();
-                //timer.StartTimer();
+                Invoke("StartTimerDelayed", 5f);
             }
         }
+    }
+
+    private void StartTimerDelayed()
+    {
+        timer.StartTimer();
     }
 }
