@@ -7,13 +7,13 @@ public class ScoreDisplay : MonoBehaviour
 
     
 {
-    public TextMeshPro scoreText;
+    [SerializeField] TextMeshProUGUI scoreText;
 
     public ScoreManager scoreManager;
     // Start is called before the first frame update
     void Start()
     {
-        scoreText = GetComponent<TextMeshPro>();
+        scoreText = GetComponent<TextMeshProUGUI>();
         
     }
 

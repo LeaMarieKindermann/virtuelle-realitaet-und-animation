@@ -13,41 +13,38 @@ public class BulletCollisionHandler : MonoBehaviour
         {
             // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
             GameObject robot = collision.transform.root.gameObject;
-            botAnimator = robot.GetComponent<Animator>();
+            DestroyWithAnimation(robot);
 
-            botAnimator.SetTrigger("fall");
-            
-            Destroy(robot, 1.2f);
 
-            // Zerstöre den Roboter
-            //Destroy(robot);
         }
         if (collision.gameObject.CompareTag("bodyshot"))
         {
             // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
             GameObject robot = collision.transform.root.gameObject;
-            
-            botAnimator = robot.GetComponent<Animator>();
-
-            botAnimator.SetTrigger("fall");
-           // fallSound.Play();
-            Destroy(robot, 0.7f);
+            DestroyWithAnimation(robot);
         }
         if (collision.gameObject.CompareTag("footshot"))
         {
             // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
             GameObject robot = collision.transform.root.gameObject;
 
-            
-            botAnimator = robot.GetComponent<Animator>();
-
-            botAnimator.SetTrigger("fall");
-            //fallSound.Play();
-            Destroy(robot, 0.7f);
+            DestroyWithAnimation(robot);
         }
 
         // Zerstöre das Bullet-Objekt
         Destroy(gameObject);
+    }
+
+    private void DestroyWithAnimation(GameObject robot)
+    {
+        botAnimator = robot.GetComponent<Animator>();
+
+        botAnimator.SetTrigger("fall");
+
+        Destroy(robot, 1.2f);
+
+        
+
     }
 }
 
