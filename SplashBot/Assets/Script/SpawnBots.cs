@@ -9,7 +9,7 @@ public class SpawnBots : MonoBehaviour
      // Zeitintervall zwischen den Spawns für feste bots (in Sekunden)
     public float spawnInterval = 5.0f; 
 
-    public float startCountdown = 3.0f;
+    public float startCountdown = 5.0f;
 
     
     // Für feste Bots
@@ -33,15 +33,19 @@ public class SpawnBots : MonoBehaviour
 
 
     // Punkte
+    //DELETE?
     public long score = 0;
-//TODO delete
-    //id
-    //private long id = 0;
+
+    //Soundeffekt countdown
+    public AudioSource countdownSource;
+    public AudioSource fallSound;
+    public AudioSource spawnSound;
 
     //Animator
     Animator botAnimator;
 
-    // Start is called before the first frame update
+
+    // delete
     void Start()
     {
        
@@ -51,7 +55,7 @@ public class SpawnBots : MonoBehaviour
         Invoke("DisableSpawn", 120f);
 
 
-       
+        countdownSource.Play();
         InvokeRepeating("SpawnBotsStand", startCountdown,spawnInterval);
 
         InvokeRepeating("SpawnAndMoveBots", 60f ,10f);
@@ -59,13 +63,34 @@ public class SpawnBots : MonoBehaviour
         
     }
 
+    // soll bei collision mit dem Knopf aufgerufen werden
+      public void StartSpawning()
+    {
+          spawnEnabled = true;
+        //DELETE?
+        score = 0;
+
+        
+        // Damit das speil nah 2min aufhört
+        Invoke("DisableSpawn", 120f);
+
+        // Speilt counddown
+       countdownSource.Play();
+        InvokeRepeating("SpawnBotsStand", startCountdown,spawnInterval);
+        
+
+        InvokeRepeating("SpawnAndMoveBots", 60f ,10f);
+
+      
+    }
+
     private void SpawnBotsStand()
         {
             
         if (!spawnEnabled)
             return;
-
-            bool laufTag = false;
+        //DELETE
+           // bool laufTag = false;
 
         // Zufällig einen Spawnpunkt auswählen
         int randomIndex = Random.Range(0, spawnPoints.Length);
@@ -77,6 +102,7 @@ public class SpawnBots : MonoBehaviour
         Vector3 spawnPosition = selectedSpawnPoint.position;
 
          GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
+         spawnSound.Play();
          botAnimator = instantiatedBot.GetComponent<Animator>();
         botAnimator.SetTrigger("disapear");
        
@@ -133,7 +159,7 @@ public class SpawnBots : MonoBehaviour
 
 private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float speed)
 {
-    while (botToMove.transform.position != targetPosition)
+    while (botToMove.transform.position != targetPosition && botToMove !=null)
     {
         // Bot zum Ziel bewegen
         botToMove.transform.position = Vector3.MoveTowards(botToMove.transform.position, targetPosition, speed * Time.deltaTime);
@@ -154,13 +180,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         spawnEnabled = false; // Spawntimer deaktivieren
     }
 
-    // Kann von wo anders aufgerufen werden 
-      public void StartSpawning()
-    {
-        spawnEnabled = true;
-
-        score = 0;
-    }
+    
 
     
 
@@ -179,14 +199,13 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
     private void OnCollisionEnter(Collision collision)
     {
 
-        if(collision.gameObject.CompareTag("joined")){
-            return;
-        }
+        
 
         if (collision.gameObject.CompareTag("bot"))
         {
             botAnimator.SetTrigger("fall");
-            Destroy(collision.gameObject);
+            fallSound.Play();
+            Destroy(collision.gameObject,1.2f);
             Debug.Log("Bot zerstört");
         }
         else if (collision.gameObject.CompareTag("bullet"))

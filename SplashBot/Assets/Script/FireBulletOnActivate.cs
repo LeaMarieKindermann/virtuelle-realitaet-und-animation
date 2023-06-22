@@ -10,6 +10,9 @@ public class FireBulletOnActivate : MonoBehaviour
     public Transform spawnPoint;
     public float fireSpeed = 20;
 
+      //Soundeffekt countdown
+    public AudioSource shootSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,7 @@ public class FireBulletOnActivate : MonoBehaviour
 
     public void FireBullet(ActivateEventArgs arg)
     {
+        shootSound.Play();
         GameObject spawnBullet = Instantiate(bullet);
         spawnBullet.transform.position = spawnPoint.position;
         spawnBullet.GetComponent<Rigidbody>().velocity = spawnPoint.forward * fireSpeed;
