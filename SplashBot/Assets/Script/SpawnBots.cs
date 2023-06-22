@@ -44,32 +44,10 @@ public class SpawnBots : MonoBehaviour
     //Animator
     Animator botAnimator;
 
-
-    // delete
-    void Start()
-    {
-       
-        
-
-        // Damit das speil nah 2min aufhört
-        Invoke("DisableSpawn", 120f);
-
-
-        countdownSource.Play();
-        InvokeRepeating("SpawnBotsStand", startCountdown,spawnInterval);
-
-        InvokeRepeating("SpawnAndMoveBots", 60f ,10f);
-        
-        
-    }
-
     // soll bei collision mit dem Knopf aufgerufen werden
       public void StartSpawning()
     {
           spawnEnabled = true;
-        //DELETE?
-        score = 0;
-
         
         // Damit das speil nah 2min aufhört
         Invoke("DisableSpawn", 120f);
