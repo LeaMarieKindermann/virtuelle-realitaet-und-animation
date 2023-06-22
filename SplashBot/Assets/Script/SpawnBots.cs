@@ -38,7 +38,7 @@ public class SpawnBots : MonoBehaviour
 
     //Soundeffekt countdown
     public AudioSource countdownSource;
-    public AudioSource fallSound;
+    //public AudioSource fallSound;
     public AudioSource spawnSound;
 
     //Animator
@@ -161,9 +161,11 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
 {
     while (botToMove.transform.position != targetPosition && botToMove !=null)
     {
-        // Bot zum Ziel bewegen
-        botToMove.transform.position = Vector3.MoveTowards(botToMove.transform.position, targetPosition, speed * Time.deltaTime);
-
+            if (botToMove != null)
+            {
+                // Bot zum Ziel bewegen
+                botToMove.transform.position = Vector3.MoveTowards(botToMove.transform.position, targetPosition, speed * Time.deltaTime);
+            }
         yield return null;
     }
 
@@ -195,6 +197,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         }
     }
     
+    /*
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -205,7 +208,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         {
             botAnimator.SetTrigger("fall");
             fallSound.Play();
-            Destroy(collision.gameObject,1.2f);
+            Destroy(collision.gameObject,5f);
             Debug.Log("Bot zerstört");
         }
         else if (collision.gameObject.CompareTag("bullet"))
@@ -220,7 +223,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
     }
 
    
-
+*/
 
    
 }
