@@ -14,6 +14,7 @@ TagManager:
   - headshot
   - bodyshot
   - footshot
+  - startButton
   layers:
   - Default
   - TransparentFX
