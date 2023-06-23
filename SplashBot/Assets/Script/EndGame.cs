@@ -10,6 +10,7 @@ public class EndGame : MonoBehaviour
         // Überprüfe, ob der Collider mit dem gewünschten Tag getroffen wurde
         if (collision.collider.CompareTag("bullet"))
         {
+            // gehe zurück in die Hauptmenüszene 
             SceneManager.LoadScene("StartMenu");
         }
     }
