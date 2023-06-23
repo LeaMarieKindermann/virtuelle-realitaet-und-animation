@@ -32,14 +32,11 @@ public class SpawnBots : MonoBehaviour
     private bool spawnEnabled = true; 
 
 
-    // Punkte
-    //DELETE?
-    public long score = 0;
-
-    //Soundeffekt countdown
+    //Soundeffekte
     public AudioSource countdownSource;
-    //public AudioSource fallSound;
     public AudioSource spawnSound;
+    public AudioSource gameOver;
+
 
     //Animator
     Animator botAnimator;
@@ -49,10 +46,10 @@ public class SpawnBots : MonoBehaviour
     {
           spawnEnabled = true;
         
-        // Damit das speil nah 2min aufhört
+        // Damit das spiel nah 2min aufhört
         Invoke("DisableSpawn", 120f);
 
-        // Speilt counddown
+        // Spielt countdown
        countdownSource.Play();
         InvokeRepeating("SpawnBotsStand", startCountdown,spawnInterval);
         
@@ -67,14 +64,12 @@ public class SpawnBots : MonoBehaviour
             
         if (!spawnEnabled)
             return;
-        //DELETE
-           // bool laufTag = false;
+        
 
         // Zufällig einen Spawnpunkt auswählen
         int randomIndex = Random.Range(0, spawnPoints.Length);
         Transform selectedSpawnPoint = spawnPoints[randomIndex];
-        //Todo delete
-        //Transform selectedSpawnPoint = spawnPoints[1];
+      
 
         // Position des ausgewählten Spawnpunkts verwenden
         Vector3 spawnPosition = selectedSpawnPoint.position;
@@ -89,9 +84,7 @@ public class SpawnBots : MonoBehaviour
 
 
          if( instantiatedBot !=null){
-            // lambafunktion als Wrapper  um das bot objekt zu übergeben
-            // System.Action deleteBotAction = () => deleteBotAfterTime(instantiatedBot);
-            //Invoke("deleteBotAction", despawnDelay);
+           
             StartCoroutine(DeleteBotAfterTime(instantiatedBot, despawnDelay));
             
 
@@ -157,7 +150,10 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
 
  private void DisableSpawn()
     {
-        spawnEnabled = false; // Spawntimer deaktivieren
+        spawnEnabled = false; // Spawn deaktivieren
+
+        // gameOver sound
+        gameOver.Play();
     }
 
     
@@ -175,33 +171,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
         }
     }
     
-    /*
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        
-
-        if (collision.gameObject.CompareTag("bot"))
-        {
-            botAnimator.SetTrigger("fall");
-            fallSound.Play();
-            Destroy(collision.gameObject,5f);
-            Debug.Log("Bot zerstört");
-        }
-        else if (collision.gameObject.CompareTag("bullet"))
-        {
-            Destroy(collision.gameObject);
-            Debug.Log("Bullet zerstört");
-        }
-        else
-        {
-            Debug.Log("Kollision mit unbekanntem Objekt");
-        }
-    }
-
-   
-*/
+ 
 
    
 }
