@@ -2466,6 +2466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGame: {fileID: 1445960186}
   timer: {fileID: 2057289374}
+  scoreManager: {fileID: 333134532}
 --- !u!1 &653556748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2988,7 +2989,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.22
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -14,7 +14,7 @@ public class BulletCollisionHandler : MonoBehaviour
             {
                 // Zugriff auf den Roboter über das Elternobjekt (Root-Objekt)
                 GameObject robot = collision.transform.root.gameObject;
-
+               // robot.collider.enabled = false;
                 DestroyWithAnimation(robot);
 
             }
@@ -27,6 +27,13 @@ public class BulletCollisionHandler : MonoBehaviour
     {
         botAnimator = robot.GetComponent<Animator>();
         botAnimator.SetTrigger("fall");
+
+        Collider[] colliders = robot.GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false; 
+        }
+
         Destroy(robot, 1.2f);
     }
 }

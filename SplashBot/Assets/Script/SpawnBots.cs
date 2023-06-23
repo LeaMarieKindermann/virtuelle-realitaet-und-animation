@@ -28,8 +28,6 @@ public class SpawnBots : MonoBehaviour
      public float despawnDelay = 30f;
 
 
-    // Damit spiel endet nach einer Zeit
-    private bool spawnEnabled = true; 
 
 
     //Soundeffekte
@@ -44,7 +42,7 @@ public class SpawnBots : MonoBehaviour
     // soll bei collision mit dem Knopf aufgerufen werden
       public void StartSpawning()
     {
-          spawnEnabled = true;
+         
         
         // Damit das spiel nah 2min aufhört
         Invoke("DisableSpawn", 120f);
@@ -61,9 +59,7 @@ public class SpawnBots : MonoBehaviour
 
     private void SpawnBotsStand()
         {
-            
-        if (!spawnEnabled)
-            return;
+     
         
 
         // Zufällig einen Spawnpunkt auswählen
@@ -96,8 +92,7 @@ public class SpawnBots : MonoBehaviour
 
     private void SpawnAndMoveBots()
 {
-    if (!spawnEnabled)
-            return;
+
 
             bool laufTag = false;
 
@@ -150,8 +145,9 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
 
  private void DisableSpawn()
     {
-        spawnEnabled = false; // Spawn deaktivieren
-
+        
+        CancelInvoke("SpawnBotsStand");
+        CancelInvoke("SpawnAndMoveBots");
         // gameOver sound
         gameOver.Play();
     }

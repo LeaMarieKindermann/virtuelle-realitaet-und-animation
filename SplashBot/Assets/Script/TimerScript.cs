@@ -45,4 +45,10 @@ public class TimerScript : MonoBehaviour
         // Starte den Timer
         timerStarted = true;
     }
+
+    public void ResetTimer()
+    {
+        currentTime = totalTime;
+        timerStarted = false; 
+    }
 }

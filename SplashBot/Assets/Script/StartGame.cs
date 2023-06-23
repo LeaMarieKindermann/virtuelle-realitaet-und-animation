@@ -6,6 +6,7 @@ public class StartGame : MonoBehaviour
 {
     public SpawnBots startGame;
     public TimerScript timer;
+    public ScoreManager scoreManager;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -17,6 +18,13 @@ public class StartGame : MonoBehaviour
             // Überprüfe, ob startGame und timer nicht null sind, bevor die Methoden aufgerufen werden
             if (startGame != null && timer != null)
             {
+                // Score zurück setzen
+                scoreManager.ResetScore();
+                timer.ResetTimer();
+                Debug.Log("AKTUELLER SCORE: " + scoreManager.score);
+                // Timer restet
+
+                
                 startGame.StartSpawning();
                 Invoke("StartTimerDelayed", 5f);
             }

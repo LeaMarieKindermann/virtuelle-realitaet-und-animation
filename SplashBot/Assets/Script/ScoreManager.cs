@@ -21,5 +21,10 @@ public class ScoreManager : MonoBehaviour
         // Hier kannst du weitere Aktionen basierend auf dem erreichten Punktestand ausführen
         Debug.Log("Punktezahl" + score);
     }
+
+    public void ResetScore()
+    {
+        score = 0;
+    }
 }
 
