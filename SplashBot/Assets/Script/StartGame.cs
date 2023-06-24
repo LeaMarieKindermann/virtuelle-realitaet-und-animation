@@ -7,6 +7,8 @@ public class StartGame : MonoBehaviour
     public SpawnBots startGame;
     public TimerScript timer;
     public ScoreManager scoreManager;
+    public Collider gameCollider;
+    public float disableDuration = 125f; // 2 Minuten in Sekunden
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -27,6 +29,9 @@ public class StartGame : MonoBehaviour
                 
                 startGame.StartSpawning();
                 Invoke("StartTimerDelayed", 5f);
+
+                // Collider für die definierte Zeit deaktivieren
+                StartCoroutine(DisableColliderForDuration());
             }
         }
     }
@@ -34,5 +39,17 @@ public class StartGame : MonoBehaviour
     private void StartTimerDelayed()
     {
         timer.StartTimer();
+    }
+
+    private IEnumerator DisableColliderForDuration()
+    {
+        // Collider deaktivieren
+        gameCollider.enabled = false;
+
+        // Warte für die definierte Dauer
+        yield return new WaitForSeconds(disableDuration);
+
+        // Collider wieder aktivieren
+        gameCollider.enabled = true;
     }
 }

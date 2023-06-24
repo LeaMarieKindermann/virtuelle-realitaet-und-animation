@@ -1530,9 +1530,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa99c915e8e8a144acd9a824663ecbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 728449113489478717, guid: 8c438f6b4bbe2f240b0516196f76bac8, type: 3}
+  bullet: {fileID: 1300460677699556232, guid: f6359c88d488ada41bb839c094e70666, type: 3}
   spawnPoint: {fileID: 2142067223}
-  fireSpeed: 20
+  fireSpeed: 35
   shootSound: {fileID: 1000011468}
 --- !u!114 &502445111
 MonoBehaviour:
@@ -2467,6 +2467,8 @@ MonoBehaviour:
   startGame: {fileID: 1445960186}
   timer: {fileID: 2057289374}
   scoreManager: {fileID: 333134532}
+  gameCollider: {fileID: 601551760}
+  disableDuration: 125
 --- !u!1 &653556748
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,6 +3815,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 709987170639760550, guid: 71178d4b2edfdee4a9adc90bf94d469a, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1300460677699556232, guid: f6359c88d488ada41bb839c094e70666, type: 3}
+    - target: {fileID: 709987170639760550, guid: 71178d4b2edfdee4a9adc90bf94d469a, type: 3}
+      propertyPath: fireSpeed
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 2710730494447837748, guid: 71178d4b2edfdee4a9adc90bf94d469a, type: 3}
       propertyPath: m_Name
       value: LowPoly Scifi_Gun (second)
@@ -6174,7 +6184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142067222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00004, y: 0.00415, z: 0.01586}
+  m_LocalPosition: {x: -0.00004, y: 0.00415, z: 0.02026}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 0
   m_Children: []

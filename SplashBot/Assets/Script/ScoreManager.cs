@@ -17,9 +17,6 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-
-        // Hier kannst du weitere Aktionen basierend auf dem erreichten Punktestand ausführen
-        Debug.Log("Punktezahl" + score);
     }
 
     public void ResetScore()
