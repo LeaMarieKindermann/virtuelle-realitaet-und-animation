@@ -12,23 +12,20 @@ public class SpawnBots : MonoBehaviour
     public float startCountdown = 5.0f;
 
     
-    // Für feste Bots
+    // für feste Bots
      public Transform[] spawnPoints;
 
      public Transform[] spawnPointsMove;
 
      public Transform[] deletePoints;
 
-
+    //Punkt wo doe Bots hinschauen 
      public Transform lookAt;
 
 
 
      // Zeitversatz zum Entfernen des Objekts (in Sekunden)
      public float despawnDelay = 30f;
-
-
-
 
     //Soundeffekte
     public AudioSource countdownSource;
@@ -39,7 +36,7 @@ public class SpawnBots : MonoBehaviour
     //Animator
     Animator botAnimator;
 
-    // soll bei collision mit dem Knopf aufgerufen werden
+    // startet eine Runde
       public void StartSpawning()
     {
          
@@ -60,7 +57,6 @@ public class SpawnBots : MonoBehaviour
     private void SpawnBotsStand()
         {
      
-        
 
         // Zufällig einen Spawnpunkt auswählen
         int randomIndex = Random.Range(0, spawnPoints.Length);
@@ -73,11 +69,7 @@ public class SpawnBots : MonoBehaviour
          GameObject instantiatedBot = Instantiate(bot, spawnPosition, Quaternion.LookRotation(lookAt.position + spawnPosition));
          spawnSound.Play();
          botAnimator = instantiatedBot.GetComponent<Animator>();
-        botAnimator.SetTrigger("disapear");
        
-
-    
-
 
          if( instantiatedBot !=null){
            
@@ -86,16 +78,11 @@ public class SpawnBots : MonoBehaviour
 
         }
 
-
-
     }
+
 
     private void SpawnAndMoveBots()
 {
-
-
-            bool laufTag = false;
-
 
     // Zufällig einen Spawnpunkt auswählen
     int randomIndex = Random.Range(0, spawnPointsMove.Length);
@@ -108,9 +95,6 @@ public class SpawnBots : MonoBehaviour
     GameObject instantiatedBot = Instantiate(bot, spawnPosition,  Quaternion.LookRotation(lookAt.position + spawnPosition));
 
     botAnimator = instantiatedBot.GetComponent<Animator>();
-
-    
-
 
 
     // Bot zu einem bestimmten Punkt bewegen
@@ -138,9 +122,7 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
     // Bot zerstören
     if(botToMove != null){
        Destroy(botToMove); 
-    }
-    
-    
+    }  
 }
 
  private void DisableSpawn()
@@ -153,21 +135,12 @@ private IEnumerator MoveBot(GameObject botToMove, Vector3 targetPosition, float 
     }
 
     
-
-    
-
     private IEnumerator DeleteBotAfterTime(GameObject bot,  float delay){
 
         yield return new WaitForSeconds(20f);
         if(bot != null){
-    
-        botAnimator.SetTrigger("disapear");
-        yield return new WaitForSeconds(5f);
-        Destroy(bot, 3);
+        Destroy(bot);
         }
     }
-    
- 
-
    
 }
